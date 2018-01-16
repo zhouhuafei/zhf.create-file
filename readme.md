@@ -1,6 +1,7 @@
 # 创建文件
 ```
 const CreateFile = require('zhf.create-file');
+
 new CreateFile({
     callback: {
         // 文件创建完毕的回调
@@ -12,9 +13,9 @@ new CreateFile({
     },
     data: {
         path: './', // 路径
-        fileName: 'testCreateFile', // 文件名
-        extendName: '.js', // 扩展名
-        content: 'testCreateFile', // 文件的内容
+        fileName: 'test-create-file', // 文件名
+        extendName: '.txt', // 扩展名
+        content: '测试创建文件', // 文件的内容
     },
 });
 ```
