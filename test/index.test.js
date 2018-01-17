@@ -1,4 +1,4 @@
-const CreateFile = require('./index');
+const CreateFile = require('../dist/index.min');
 
 test(
     `
