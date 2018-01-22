@@ -1,27 +1,24 @@
-const tools = require('zhf.tools');
+const extend = require('zhf.extend');
 const fs = require('fs');
 
 // 创建文件
 class CreateFile {
     constructor(json) {
-        this.opts = tools.extend({
-            defaults: {
-                callback: {
-                    writeFile: function () {
-                    },
-                },
-                config: {
-                    isCover: false, // 是否覆盖已有文件
-                },
-                data: {
-                    path: '', // 路径
-                    fileName: '', // 文件名
-                    extendName: '', // 扩展名
-                    content: '', // 文件的内容
+        this.opts = extend({
+            callback: {
+                writeFile: function () {
                 },
             },
-            inherits: json,
-        });
+            config: {
+                isCover: false, // 是否覆盖已有文件
+            },
+            data: {
+                path: '', // 路径
+                fileName: '', // 文件名
+                extendName: '', // 扩展名
+                content: '', // 文件的内容
+            },
+        }, json);
         this.init();
     }
 

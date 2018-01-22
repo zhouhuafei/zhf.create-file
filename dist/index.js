@@ -4,7 +4,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var tools = require('zhf.tools');
+var extend = require('zhf.extend');
 var fs = require('fs');
 
 // 创建文件
@@ -13,23 +13,20 @@ var CreateFile = function () {
     function CreateFile(json) {
         _classCallCheck(this, CreateFile);
 
-        this.opts = tools.extend({
-            defaults: {
-                callback: {
-                    writeFile: function writeFile() {}
-                },
-                config: {
-                    isCover: false // 是否覆盖已有文件
-                },
-                data: {
-                    path: '', // 路径
-                    fileName: '', // 文件名
-                    extendName: '', // 扩展名
-                    content: '' // 文件的内容
-                }
+        this.opts = extend({
+            callback: {
+                writeFile: function writeFile() {}
             },
-            inherits: json
-        });
+            config: {
+                isCover: false // 是否覆盖已有文件
+            },
+            data: {
+                path: '', // 路径
+                fileName: '', // 文件名
+                extendName: '', // 扩展名
+                content: '' // 文件的内容
+            }
+        }, json);
         this.init();
     }
 
