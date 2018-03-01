@@ -50,6 +50,10 @@ var CreateFile = function () {
             if (!data.extendName) {
                 console.log('扩展名不存在');
                 return;
+            } else {
+                if (data.extendName.charAt(0) !== '.') {
+                    data.extendName = '.' + data.extendName;
+                }
             }
             this.power();
         }

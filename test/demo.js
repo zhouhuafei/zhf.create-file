@@ -1,6 +1,4 @@
-# 创建文件
-```
-const CreateFile = require('zhf.create-file');
+const CreateFile = require('../dist/index.min');
 
 new CreateFile({
     callback: {
@@ -15,7 +13,6 @@ new CreateFile({
         path: './', // 路径
         fileName: 'test-create-file', // 文件名
         extendName: '.log', // 扩展名
-        content: '测试创建文件', // 文件的内容
+        content: `const name = '测试创建文件';`, // 文件的内容
     },
 });
-```

@@ -14,7 +14,7 @@ test(
         data: {
             path: './', // 路径
             fileName: 'test-create-file', // 文件名
-            extendName: '.txt', // 扩展名
+            extendName: '.log', // 扩展名
             content: '测试创建文件', // 文件的内容
         },
     });
@@ -32,12 +32,12 @@ test(
             data: {
                 path: './', // 路径
                 fileName: 'test-create-file', // 文件名
-                extendName: '.txt', // 扩展名
-                content: '测试创建文件', // 文件的内容
+                extendName: '.log', // 扩展名
+                content: `const name = '测试创建文件';`, // 文件的内容
             },
         });
         const fs = require('fs');
-        fs.stat('./test-create-file.txt', function (error, redult) {
+        fs.stat('./test-create-file.log', function (error, redult) {
             expect(!error).toBe(true);
         });
     }
