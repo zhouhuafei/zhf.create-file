@@ -50,15 +50,33 @@ class CreateFile {
     writeFile() {
         const self = this;
         const data = this.opts.data;
-        const file = data.path + data.fileName + data.extendName;
-        fs.writeFile(file, data.content, function (error) {
+        const dataPath = data.path;
+        const file = dataPath + data.fileName + data.extendName;
+        fs.stat(dataPath, function (error) {
             if (error) {
-                console.log(`错误信息:${error}`);
+                // 如果路径不存在则创建路径
+                fs.mkdir(dataPath, function (error) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        fnWriteFile();
+                    }
+                });
             } else {
-                console.log(`文件创建成功,文件路径:${file}`);
+                fnWriteFile();
             }
-            self.opts.callback.writeFile(error);
         });
+
+        function fnWriteFile() {
+            fs.writeFile(file, data.content, function (error) {
+                if (error) {
+                    console.log(`错误信息:${error}`);
+                } else {
+                    console.log(`文件创建成功,文件路径:${file}`);
+                }
+                self.opts.callback.writeFile(error);
+            });
+        }
     }
 
     power() {

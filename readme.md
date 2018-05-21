@@ -1,4 +1,5 @@
 # 创建文件
+* 如果路径不存在，会自动创建路径。
 ```
 const CreateFile = require('zhf.create-file');
 

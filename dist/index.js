@@ -62,15 +62,33 @@ var CreateFile = function () {
         value: function writeFile() {
             var self = this;
             var data = this.opts.data;
-            var file = data.path + data.fileName + data.extendName;
-            fs.writeFile(file, data.content, function (error) {
+            var dataPath = data.path;
+            var file = dataPath + data.fileName + data.extendName;
+            fs.stat(dataPath, function (error) {
                 if (error) {
-                    console.log('\u9519\u8BEF\u4FE1\u606F:' + error);
+                    // 如果路径不存在则创建路径
+                    fs.mkdir(dataPath, function (error) {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            fnWriteFile();
+                        }
+                    });
                 } else {
-                    console.log('\u6587\u4EF6\u521B\u5EFA\u6210\u529F,\u6587\u4EF6\u8DEF\u5F84:' + file);
+                    fnWriteFile();
                 }
-                self.opts.callback.writeFile(error);
             });
+
+            function fnWriteFile() {
+                fs.writeFile(file, data.content, function (error) {
+                    if (error) {
+                        console.log('\u9519\u8BEF\u4FE1\u606F:' + error);
+                    } else {
+                        console.log('\u6587\u4EF6\u521B\u5EFA\u6210\u529F,\u6587\u4EF6\u8DEF\u5F84:' + file);
+                    }
+                    self.opts.callback.writeFile(error);
+                });
+            }
         }
     }, {
         key: 'power',
