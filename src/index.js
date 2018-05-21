@@ -1,5 +1,7 @@
 const extend = require('zhf.extend');
 const fs = require('fs');
+const path = require('path');
+// const mkdirs = require('zhf.mkdirs');
 
 // 创建文件
 class CreateFile {
@@ -52,16 +54,26 @@ class CreateFile {
         const data = this.opts.data;
         const dataPath = data.path;
         const file = dataPath + data.fileName + data.extendName;
-        fs.stat(dataPath, function (error) {
+
+        function mkdirs(dirname, callback) {
+            if (!dirname) {
+                console.log('路径参数不存在(Path parameters do not exist)');
+                return;
+            }
+            fs.stat(dirname, function (error) {
+                if (error) {
+                    mkdirs(path.dirname(dirname), function () {
+                        fs.mkdir(dirname, callback);
+                    });
+                } else {
+                    callback();
+                }
+            });
+        }
+
+        mkdirs(dataPath, function (error) {
             if (error) {
-                // 如果路径不存在则创建路径
-                fs.mkdir(dataPath, function (error) {
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        fnWriteFile();
-                    }
-                });
+                console.log(error);
             } else {
                 fnWriteFile();
             }

@@ -6,6 +6,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var extend = require('zhf.extend');
 var fs = require('fs');
+var path = require('path');
+// const mkdirs = require('zhf.mkdirs');
 
 // 创建文件
 
@@ -64,16 +66,26 @@ var CreateFile = function () {
             var data = this.opts.data;
             var dataPath = data.path;
             var file = dataPath + data.fileName + data.extendName;
-            fs.stat(dataPath, function (error) {
+
+            function mkdirs(dirname, callback) {
+                if (!dirname) {
+                    console.log('路径参数不存在(Path parameters do not exist)');
+                    return;
+                }
+                fs.stat(dirname, function (error) {
+                    if (error) {
+                        mkdirs(path.dirname(dirname), function () {
+                            fs.mkdir(dirname, callback);
+                        });
+                    } else {
+                        callback();
+                    }
+                });
+            }
+
+            mkdirs(dataPath, function (error) {
                 if (error) {
-                    // 如果路径不存在则创建路径
-                    fs.mkdir(dataPath, function (error) {
-                        if (error) {
-                            console.log(error);
-                        } else {
-                            fnWriteFile();
-                        }
-                    });
+                    console.log(error);
                 } else {
                     fnWriteFile();
                 }
