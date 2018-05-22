@@ -6,8 +6,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var extend = require('zhf.extend');
 var fs = require('fs');
-var path = require('path');
-// const mkdirs = require('zhf.mkdirs');
+var objMkdirs = require('zhf.mkdirs');
+var mkdirs = objMkdirs.mkdirs;
 
 // 创建文件
 
@@ -66,30 +66,7 @@ var CreateFile = function () {
             var data = this.opts.data;
             var dataPath = data.path;
             var file = dataPath + data.fileName + data.extendName;
-
-            function mkdirs(dirname, callback) {
-                if (!dirname) {
-                    console.log('路径参数不存在(Path parameters do not exist)');
-                    return;
-                }
-                fs.stat(dirname, function (error) {
-                    if (error) {
-                        mkdirs(path.dirname(dirname), function () {
-                            fs.mkdir(dirname, callback);
-                        });
-                    } else {
-                        callback();
-                    }
-                });
-            }
-
-            mkdirs(dataPath, function (error) {
-                if (error) {
-                    console.log(error);
-                } else {
-                    fnWriteFile();
-                }
-            });
+            mkdirs(dataPath, fnWriteFile); // 路径不存在则创建路径，路径存在则不做任何操作。路径创建完毕则创建文件。
 
             function fnWriteFile() {
                 fs.writeFile(file, data.content, function (error) {
@@ -108,7 +85,7 @@ var CreateFile = function () {
             var self = this;
             var data = this.opts.data;
             var file = data.path + data.fileName + data.extendName;
-            fs.readFile(file, function (error, response) {
+            fs.readFile(file, function (error, content) {
                 if (self.opts.config.isCover) {
                     self.writeFile();
                 } else if (error) {
